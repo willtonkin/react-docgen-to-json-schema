@@ -1,0 +1,51 @@
+{
+  "name": "react-docgen-to-json-schema",
+  "version": "0.0.0",
+  "description": "Converts react-docgen output to JSON Schema.",
+  "main": "index.js",
+  "repository": "hydrateio/react-docgen-to-json-schema",
+  "author": "Hydrate <dev@hydrate.io>",
+  "license": "MIT",
+  "scripts": {
+    "docs": "update-markdown-jsdoc --no-markdown-toc",
+    "test": "ava && eslint ."
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "keywords": [
+    "react",
+    "react-docgen",
+    "docgen",
+    "docs",
+    "documentation",
+    "transform",
+    "convert",
+    "proptypes",
+    "prop-types",
+    "json",
+    "schema",
+    "json-schema",
+    "quicktype"
+  ],
+  "devDependencies": {
+    "ajv": "^6.5.3",
+    "ava": "^0.25.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^5.4.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard-react": "^6.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^3.1.0",
+    "react-docgen": "^2.21.0",
+    "standard": "^11.0.0",
+    "update-markdown-jsdoc": "^1.0.6"
+  }
+}
