@@ -6,7 +6,7 @@
 
 ## Install
 
-This module requires `node >= 4`.
+This module requires `node >= 6`.
 
 ```bash
 npm install --save react-docgen-to-json-schema
