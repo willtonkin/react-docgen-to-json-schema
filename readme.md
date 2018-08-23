@@ -102,7 +102,8 @@ export default class MyComponent extends Component {
     },
     "bar": {
       "type": "string",
-      "description": "Description bar.\n\n- markdown list-item 1\n- markdown list-item 2"
+      "description": "Description bar.\n\n- markdown list-item 1\n- markdown list-item 2",
+      "default": "bar"
     },
     "baz": {
       "type": "boolean",

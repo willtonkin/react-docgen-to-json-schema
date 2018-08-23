@@ -142,7 +142,7 @@ const getPropertyForProp = ({
   } else if (type.name === 'bool') {
     result.type = 'boolean'
   } else if (type.name === 'func') {
-    return null
+    return
   }
 
   if (defaultValue) {
