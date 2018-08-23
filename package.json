@@ -47,5 +47,8 @@
     "react-docgen": "^2.21.0",
     "standard": "^11.0.0",
     "update-markdown-jsdoc": "^1.0.6"
+  },
+  "dependencies": {
+    "notevil": "^1.1.0"
   }
 }

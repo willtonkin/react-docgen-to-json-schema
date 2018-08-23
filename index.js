@@ -1,5 +1,7 @@
 'use strict'
 
+const safeEval = require('notevil')
+
 /**
  * Converts a single JSON object extracted by react-docgen to JSON Schema.
  *
@@ -91,17 +93,15 @@ const getPropertyForProp = ({
     // references to an object.
     if (typeof type.value === 'object') {
       result.enum = type.value.map(item => {
-        const value = item.value.replace(/'/g, '"')
-
-        const parsedValue = JSON.parse(value)
+        const value = safeEval(item.value)
 
         if (typeof item.value === 'object') {
           return {
-            value: parsedValue
+            value
           }
+        } else {
+          return value
         }
-
-        return parsedValue
       })
 
       result.type = typeof result.enum[0]
@@ -146,13 +146,7 @@ const getPropertyForProp = ({
   }
 
   if (defaultValue) {
-    // This is not actually JSON, but JS, so wrap in try-catch. Might be better
-    // as an eval.
-    try {
-      result.default = JSON.parse(defaultValue.value)
-    } catch (e) {
-      // ignore JSON parse error.
-    }
+    result.default = safeEval(defaultValue.value)
   }
 
   return result
