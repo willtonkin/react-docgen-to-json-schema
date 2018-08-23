@@ -3,6 +3,9 @@
 /**
  * Converts a single JSON object extracted by react-docgen to JSON Schema.
  *
+ * @name reactDocgenToJSONSchema
+ * @type function
+ *
  * @param {object} input - JSON object documenting a single component.
  *
  * @return {object}
