@@ -4,7 +4,7 @@
   "description": "Converts react-docgen output to JSON Schema.",
   "main": "index.js",
   "repository": "hydrateio/react-docgen-to-json-schema",
-  "author": "Hydrate <dev@hydrate.io>",
+  "author": "Hydrate <dev@hydrate.io> (https://hydrate.io)",
   "license": "MIT",
   "scripts": {
     "docs": "update-markdown-jsdoc --no-markdown-toc",
