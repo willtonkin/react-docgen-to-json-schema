@@ -93,22 +93,31 @@ const getPropertyForProp = ({
     // Only process enums if they're arrays. Don't process them if they are
     // references to an object.
     if (typeof type.value === 'object') {
-      result.enum = type.value.map(item => {
-        const value = safeEval(item.value)
+      result.enum = type.value.reduce((collector, item) => {
 
-        if (typeof item.value === 'object') {
-          return {
-            value
+        try {
+          const value = safeEval(item.value)
+
+          if (typeof item.value === 'object') {
+            collector.push({
+              value
+            })
+          } else {
+            collector.push(value)
           }
-        } else {
-          return value
+        } catch (e) {
+          console.log("could not evalulate value", e);
+          return collector
         }
-      })
+
+        return collector
+      }, [])
 
       result.type = typeof result.enum[0]
       for (const value of result.enum) {
         if (typeof value !== typeof result.enum[0]) {
-          throw new Error('Mixed enum must have consistent types')
+          console.log('Mixed enum must have consistent types, falling back to \`object\`');
+          result.type = 'object';
         }
       }
     } else {
@@ -145,7 +154,16 @@ const getPropertyForProp = ({
   }
 
   if (defaultValue) {
-    result.default = safeEval(defaultValue.value)
+    if (defaultValue.value.trim().indexOf('<') === 0) {
+      console.log("JSX default values not currently supported, skipping");
+      return result;
+    }
+
+    try {
+      result.default = safeEval(defaultValue.value);
+    } catch (e) {
+      console.log("could not evalulate defaultValue", e);
+    }
   }
 
   return result
