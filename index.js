@@ -43,6 +43,11 @@ const getSchemaProperties = (props) => {
   const properties = Object.keys(props).reduce((result, key) => {
     const original = props[key]
 
+    // Skip props that are not defined with a propType
+    if (!original.type) {
+      return result
+    }
+
     // Skip props that have '@ignore' in description (eg. in material-ui)
 
     if (original.description && original.description.indexOf('@ignore') > -1) {
