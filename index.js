@@ -44,12 +44,18 @@ const getSchemaProperties = (props) => {
     const original = props[key]
 
     // Skip props that have '@ignore' in description (eg. in material-ui)
-    if (original.description.indexOf('@ignore') > -1) {
-      return result
-    }
+    if (typeof original.description === 'undefined' && typeof original.type !== 'undefined') {
+      if (original.type.description.indexOf('@ignore') > -1) {
+        return result
+      }
+    } else {
+      if (original.description.indexOf('@ignore') > -1) {
+        return result
+      }
 
-    if (original.required) {
-      required.push(key)
+      if (original.required) {
+        required.push(key)
+      }
     }
 
     const value = getPropertyForProp(original)
