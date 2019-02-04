@@ -149,6 +149,13 @@ const getPropertyForProp = ({
     result.type = 'boolean'
   } else if (type.name === 'func') {
     return
+  } else if (type.name === 'any') {
+    result.type = 'anyOf'
+    result.anyOf = [
+      { type: 'string' },
+      { type: 'number' },
+      { type: 'boolean' }
+    ]
   }
 
   if (defaultValue) {
