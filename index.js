@@ -86,7 +86,7 @@ const getPropertyForProp = ({
   description,
   defaultValue
 }) => {
-  const result = {
+  let result = {
     type: type.name
   }
 
@@ -150,12 +150,13 @@ const getPropertyForProp = ({
   } else if (type.name === 'func') {
     return
   } else if (type.name === 'any') {
-    result.type = 'anyOf'
-    result.anyOf = [
-      { type: 'string', title: 'string' },
-      { type: 'number', title: 'number' },
-      { type: 'boolean', title: 'boolean' }
-    ]
+    result = {
+      anyOf: [
+        { type: 'string', title: 'string' },
+        { type: 'number', title: 'number' },
+        { type: 'boolean', title: 'boolean' }
+      ]
+    }
   }
 
   if (defaultValue) {
