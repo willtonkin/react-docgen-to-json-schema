@@ -44,12 +44,18 @@ const getSchemaProperties = (props) => {
     const original = props[key]
 
     // Skip props that have '@ignore' in description (eg. in material-ui)
-    if (original.description.indexOf('@ignore') > -1) {
-      return result
-    }
+    if (typeof original.description === 'undefined' && typeof original.type !== 'undefined') {
+      if (original.type.description && original.type.description.indexOf('@ignore') > -1) {
+        return result
+      }
+    } else {
+      if (original.description.indexOf('@ignore') > -1) {
+        return result
+      }
 
-    if (original.required) {
-      required.push(key)
+      if (original.required) {
+        required.push(key)
+      }
     }
 
     const value = getPropertyForProp(original)
@@ -80,7 +86,7 @@ const getPropertyForProp = ({
   description,
   defaultValue
 }) => {
-  const result = {
+  let result = {
     type: type.name
   }
 
@@ -143,6 +149,14 @@ const getPropertyForProp = ({
     result.type = 'boolean'
   } else if (type.name === 'func') {
     return
+  } else if (type.name === 'any') {
+    result = {
+      anyOf: [
+        { type: 'string', title: 'string' },
+        { type: 'number', title: 'number' },
+        { type: 'boolean', title: 'boolean' }
+      ]
+    }
   }
 
   if (defaultValue) {
