@@ -160,7 +160,11 @@ const getPropertyForProp = ({
   }
 
   if (defaultValue) {
-    result.default = safeEval(defaultValue.value)
+    try {
+      result.default = safeEval(defaultValue.value)
+    } catch (e) {
+      console.log('could not evalulate defaultValue', defaultValue.value, e.message)
+    }
   }
 
   return result
