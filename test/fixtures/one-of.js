@@ -10,6 +10,15 @@ export default class MyComponent extends Component {
       'red',
       "blue", // eslint-disable-line
       'green'
+    ]),
+
+    /**
+     * Description bar.
+     */
+    bar: PropTypes.oneOf([
+      'green',
+      42,
+      null
     ])
   }
 

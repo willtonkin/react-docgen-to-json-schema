@@ -98,24 +98,30 @@ const getPropertyForProp = ({
     // Only process enums if they're arrays. Don't process them if they are
     // references to an object.
     if (typeof type.value === 'object') {
-      result.enum = type.value.map(item => {
-        const value = safeEval(item.value)
+      result.enum = type.value.reduce((collector, item) => {
+        try {
+          const value = safeEval(item.value)
 
-        if (typeof item.value === 'object') {
-          return {
-            value
+          if (typeof item.value === 'object') {
+            collector.push({
+              value
+            })
+          } else {
+            collector.push(value)
           }
-        } else {
-          return value
+        } catch (e) {
+          console.log('could not evalulate value', e)
+          return collector
         }
-      })
 
-      result.type = typeof result.enum[0]
-      for (const value of result.enum) {
-        if (typeof value !== typeof result.enum[0]) {
-          throw new Error('Mixed enum must have consistent types')
-        }
-      }
+        return collector
+      }, [])
+
+      // type is equal to all those found in the enum
+      const types = result.enum.map(value => typeof value)
+        .filter((elem, pos, arr) => arr.indexOf(elem) === pos)
+
+      result.type = types.length === 1 ? types[0] : types
     } else {
       // Assume a string if not an object. This is because JS is loosely typed,
       // so we can normally get away with using a string.
@@ -160,7 +166,11 @@ const getPropertyForProp = ({
   }
 
   if (defaultValue) {
-    result.default = safeEval(defaultValue.value)
+    try {
+      result.default = safeEval(defaultValue.value)
+    } catch (e) {
+      console.log('could not evalulate defaultValue', defaultValue.value, e.message)
+    }
   }
 
   return result
